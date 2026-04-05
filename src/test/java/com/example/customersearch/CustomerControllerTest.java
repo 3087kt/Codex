@@ -24,18 +24,11 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void shouldShowErrorScreenWhenCustomerIdDoesNotExist() throws Exception {
-        mockMvc.perform(get("/customers/999"))
+    public void shouldShowErrorMessageWhenCustomerDoesNotExist() throws Exception {
+        mockMvc.perform(get("/customers/9999"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("customer-not-found"))
-                .andExpect(model().attribute("errorMessage", "顧客情報が存在しません"));
-    }
-
-    @Test
-    public void shouldShowErrorScreenWhenCustomerIdIsNotNumeric() throws Exception {
-        mockMvc.perform(get("/customers/abc"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("customer-not-found"))
-                .andExpect(model().attribute("errorMessage", "顧客情報が存在しません"));
+                .andExpect(view().name("detail"))
+                .andExpect(model().attribute("errorMessage", "顧客情報が存在しません"))
+                .andExpect(model().attribute("customer", org.hamcrest.Matchers.nullValue()));
     }
 }

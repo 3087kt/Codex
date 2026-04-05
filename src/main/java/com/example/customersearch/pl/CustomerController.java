@@ -50,30 +50,14 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public String detail(@PathVariable String id,
+    public String detail(@PathVariable Long id,
                          @ModelAttribute("searchForm") CustomerSearchForm searchForm,
                          Model model) {
-        Long customerId;
-        try {
-            customerId = Long.valueOf(id);
-        } catch (NumberFormatException e) {
-            return customerNotFound(model, searchForm);
-        }
-
-        Customer customer = customerService.findById(customerId).orElse(null);
-        if (customer == null) {
-            return customerNotFound(model, searchForm);
-        }
-
+        Customer customer = customerService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found: " + id));
         model.addAttribute("customer", customer);
         model.addAttribute("searchForm", searchForm);
         return "detail";
-    }
-
-    private String customerNotFound(Model model, CustomerSearchForm searchForm) {
-        model.addAttribute("errorMessage", "顧客情報が存在しません");
-        model.addAttribute("searchForm", searchForm);
-        return "customer-not-found";
     }
 
     private String setResults(Model model, CustomerSearchForm searchForm) {
