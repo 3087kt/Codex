@@ -8,7 +8,6 @@
 <body>
 <div class="container">
     <h1>顧客検索画面</h1>
-
     <form th:action="@{/customers/search}" th:object="${searchForm}" method="post">
         <div class="error-box" th:if="${#fields.hasErrors('*')}">
             <ul>
