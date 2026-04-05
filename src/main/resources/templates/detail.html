@@ -9,9 +9,7 @@
 <div class="container">
     <h1>顧客詳細画面</h1>
 
-    <div class="error-box" th:if="${errorMessage}" th:text="${errorMessage}"></div>
-
-    <dl class="detail-list" th:if="${customer != null}">
+    <dl class="detail-list">
         <dt>ID</dt><dd th:text="${customer.id}"></dd>
         <dt>氏名</dt><dd th:text="${customer.name}"></dd>
         <dt>電話番号</dt><dd th:text="${customer.phoneNumber}"></dd>

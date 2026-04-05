@@ -53,12 +53,10 @@ public class CustomerController {
     public String detail(@PathVariable Long id,
                          @ModelAttribute("searchForm") CustomerSearchForm searchForm,
                          Model model) {
-        Customer customer = customerService.findById(id).orElse(null);
+        Customer customer = customerService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found: " + id));
         model.addAttribute("customer", customer);
         model.addAttribute("searchForm", searchForm);
-        if (customer == null) {
-            model.addAttribute("errorMessage", "顧客情報が存在しません");
-        }
         return "detail";
     }
 
