@@ -1,0 +1,60 @@
+body {
+    font-family: "Yu Gothic", "Meiryo", sans-serif;
+    margin: 24px;
+}
+
+.container {
+    max-width: 900px;
+}
+
+.form-row {
+    margin-bottom: 12px;
+}
+
+label {
+    display: inline-block;
+    width: 120px;
+    font-weight: bold;
+}
+
+input {
+    width: 340px;
+    padding: 6px;
+}
+
+button {
+    padding: 8px 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+.error-box {
+    color: #c40000;
+    margin-bottom: 14px;
+}
+
+.back-form {
+    margin-top: 16px;
+}
+
+.detail-list dt {
+    float: left;
+    width: 140px;
+    font-weight: bold;
+    clear: left;
+    margin-bottom: 8px;
+}
+
+.detail-list dd {
+    margin-left: 150px;
+    margin-bottom: 8px;
+}
