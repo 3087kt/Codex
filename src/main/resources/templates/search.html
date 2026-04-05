@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>顧客検索</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <h1>顧客検索画面</h1>
+
+    <div class="error-box" th:if="${#fields.hasErrors('*')}">
+        <ul>
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+        </ul>
+    </div>
+
+    <form th:action="@{/customers/search}" th:object="${searchForm}" method="post">
+        <div class="form-row">
+            <label for="name">氏名</label>
+            <input id="name" type="text" th:field="*{name}">
+        </div>
+        <div class="form-row">
+            <label for="address">住所</label>
+            <input id="address" type="text" th:field="*{address}">
+        </div>
+        <div class="form-row">
+            <label for="phoneNumber">電話番号</label>
+            <input id="phoneNumber" type="text" th:field="*{phoneNumber}">
+        </div>
+        <button type="submit">検索</button>
+    </form>
+</div>
+</body>
+</html>
