@@ -27,8 +27,17 @@ public class CustomerControllerTest {
     public void shouldShowErrorMessageWhenCustomerDoesNotExist() throws Exception {
         mockMvc.perform(get("/customers/9999"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("detail"))
+                .andExpect(view().name("customer-not-found"))
                 .andExpect(model().attribute("errorMessage", "顧客情報が存在しません"))
-                .andExpect(model().attribute("customer", org.hamcrest.Matchers.nullValue()));
+                .andExpect(model().attributeExists("searchForm"));
+    }
+
+    @Test
+    public void shouldShowErrorMessageWhenCustomerIdIsInvalid() throws Exception {
+        mockMvc.perform(get("/customers/abc"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("customer-not-found"))
+                .andExpect(model().attribute("errorMessage", "顧客情報が存在しません"))
+                .andExpect(model().attributeExists("searchForm"));
     }
 }

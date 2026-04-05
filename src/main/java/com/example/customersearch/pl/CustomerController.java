@@ -5,11 +5,13 @@ import com.example.customersearch.bl.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -53,11 +55,19 @@ public class CustomerController {
     public String detail(@PathVariable Long id,
                          @ModelAttribute("searchForm") CustomerSearchForm searchForm,
                          Model model) {
-        Customer customer = customerService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found: " + id));
+        Customer customer = customerService.findById(id).orElse(null);
+        if (customer == null) {
+            return showCustomerNotFound(model, searchForm);
+        }
         model.addAttribute("customer", customer);
         model.addAttribute("searchForm", searchForm);
         return "detail";
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String handleMethodArgumentTypeMismatch(@ModelAttribute("searchForm") CustomerSearchForm searchForm,
+                                                   Model model) {
+        return showCustomerNotFound(model, searchForm);
     }
 
     private String setResults(Model model, CustomerSearchForm searchForm) {
@@ -65,5 +75,11 @@ public class CustomerController {
         model.addAttribute("searchForm", searchForm);
         model.addAttribute("results", results);
         return "results";
+    }
+
+    private String showCustomerNotFound(Model model, CustomerSearchForm searchForm) {
+        model.addAttribute("errorMessage", "顧客情報が存在しません");
+        model.addAttribute("searchForm", searchForm);
+        return "customer-not-found";
     }
 }
